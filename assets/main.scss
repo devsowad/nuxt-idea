@@ -1,0 +1,23 @@
+a {
+  color: unset !important;
+  text-decoration: unset;
+}
+
+.list-unstyled {
+  list-style: none;
+  padding-left: 0 !important;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.full-width {
+  width: 100% !important;
+}
+
+.text-truncate-dots {
+  font-size: 25px;
+  line-height: 0px;
+  margin-left: -3px;
+}

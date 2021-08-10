@@ -1,15 +1,21 @@
 <template>
-  <v-app dark>
-    <h1 v-if="error.statusCode === 404">
-      {{ pageNotFound }}
-    </h1>
-    <h1 v-else>
-      {{ otherError }}
-    </h1>
-    <NuxtLink to="/">
-      Home page
-    </NuxtLink>
-  </v-app>
+  <v-container>
+    <v-card
+      max-width="500"
+      class="pa-10 d-flex flex-column align-center mx-auto"
+    >
+      <BigAlert />
+      <v-card-title>
+        {{ error.statusCode === 404 ? pageNotFound : otherError }}
+      </v-card-title>
+      <v-card-actions v-if="$route.path !== '/'">
+        <v-btn to="/" color="primary">
+          <v-icon left>mdi-home</v-icon>
+          Go To Home page
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-container>
 </template>
 
 <script>
@@ -18,22 +24,22 @@ export default {
   props: {
     error: {
       type: Object,
-      default: null
-    }
+      default: null,
+    },
   },
-  data () {
+  data() {
     return {
       pageNotFound: '404 Not Found',
-      otherError: 'An error occurred'
+      otherError: 'An error occurred',
     }
   },
-  head () {
+  head() {
     const title =
       this.error.statusCode === 404 ? this.pageNotFound : this.otherError
     return {
-      title
+      title,
     }
-  }
+  },
 }
 </script>
 
