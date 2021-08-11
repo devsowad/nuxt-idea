@@ -24,7 +24,7 @@
           <v-spacer></v-spacer>
 
           <v-btn color="error" text @click="cancel"> Cancel </v-btn>
-          <submit-button :disabled="!form" text content="update" />
+          <submit-button :disabled="!form" text content="comment" />
         </v-card-actions>
       </v-form>
     </v-card>

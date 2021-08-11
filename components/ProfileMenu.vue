@@ -29,17 +29,15 @@
 
 <script>
 export default {
-  computed: {
-    loading() {
-      return this.$store.state.form.loading
-    },
-  },
+  data: () => ({
+    loading: false,
+  }),
 
   methods: {
     async logout() {
-      this.$form.startLoading()
+      this.loading = true
       await this.$auth.logout()
-      this.$form.stopLoading()
+      this.loading = false
     },
   },
 }

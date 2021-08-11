@@ -81,6 +81,9 @@
                   <v-list-item @click="confirmDialog = true">
                     <v-list-item-title> Delete Idea </v-list-item-title>
                   </v-list-item>
+                  <v-list-item :to="`/idea/${idea.slug}/edit`">
+                    <v-list-item-title> Edit Idea </v-list-item-title>
+                  </v-list-item>
                   <v-list-item @click="markAsSpam(idea.id)">
                     <v-list-item-title>Mark as Spam</v-list-item-title>
                   </v-list-item>

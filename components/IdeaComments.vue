@@ -9,7 +9,7 @@
     <v-timeline align-top dense>
       <v-timeline-item
         v-for="comment in comments"
-        :key="comment.id"
+        :key="`idea-comment-${comment.id}`"
         small
         :color="timelineColor()"
       >

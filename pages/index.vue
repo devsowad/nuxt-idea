@@ -1,9 +1,12 @@
 <template>
   <v-row id="ideas">
-    <v-col cols="12" md="3"> </v-col>
-    <v-col cols="12" md="9">
+    <v-col cols="12" md="12">
       <span v-if="ideas.data && ideas.data.length > 0">
-        <idea-card v-for="idea in ideas.data" :key="idea.title" :idea="idea" />
+        <idea-card
+          v-for="idea in ideas.data"
+          :key="`idea-card-${idea.id}`"
+          :idea="idea"
+        />
 
         <pagination
           scroll-to="#ideas"

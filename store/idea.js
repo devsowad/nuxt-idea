@@ -1,8 +1,11 @@
 import Idea from '@/models/Idea'
+import Category from '@/models/Category'
 
 export const state = () => ({
   ideas: {},
   idea: {},
+  categories: [],
+  editIdea: {},
 })
 
 const include = ['status', 'category', 'user']
@@ -35,30 +38,26 @@ export const actions = {
   },
 
   async loadIdea({ commit }, slug) {
-    try {
-      const idea = await Idea.custom(`/ideas/${slug}`)
-        .with(['category', 'status', 'user', 'comments', 'comments.user'])
-        .select({
-          ideas: select.ideas,
-          status: select.status,
-          category: select.category,
-          user: select.user,
-          comments: [
-            'body',
-            'created_at',
-            'id',
-            'idea_id',
-            'spam_reports',
-            'user_id',
-          ],
-          'comments.user': ['name', 'id'],
-        })
-        .first()
+    const idea = await Idea.custom(`/ideas/${slug}`)
+      .with(['category', 'status', 'user', 'comments', 'comments.user'])
+      .select({
+        ideas: select.ideas,
+        status: select.status,
+        category: select.category,
+        user: select.user,
+        comments: [
+          'body',
+          'created_at',
+          'id',
+          'idea_id',
+          'spam_reports',
+          'user_id',
+        ],
+        'comments.user': ['name', 'id'],
+      })
+      .first()
 
-      commit('SET_IDEA', idea)
-    } catch (error) {
-      console.log(error)
-    }
+    commit('SET_IDEA', idea)
   },
 
   async vote({ commit }, { id, single }) {
@@ -122,6 +121,45 @@ export const actions = {
       throw response
     }
   },
+
+  async loadCategories({ commit }) {
+    const categories = await Category.select('id', 'name').get()
+    commit('SET_CATEGORIES', categories)
+  },
+
+  async add(ctx, form) {
+    this.$form.startLoading()
+    try {
+      const idea = new Idea(form)
+      const data = await idea.save()
+      this.$form.resetErrors()
+      return data.slug
+    } catch ({ response }) {
+      this.$form.setErrors(response)
+      throw response
+    }
+  },
+
+  async edit({ commit }, slug) {
+    const idea = await Idea.custom(`/ideas/${slug}`)
+      .select({
+        ideas: ['id', 'category_id', 'title', 'description'],
+      })
+      .first()
+    commit('EDIT_IDEA', idea)
+  },
+
+  async update(ctx, form) {
+    this.$form.startLoading()
+    try {
+      const { data } = await this.$axios.put(`ideas/${form.id}`, form)
+      this.$form.resetErrors()
+      return data.slug
+    } catch ({ response }) {
+      this.$form.setErrors(response)
+      throw response
+    }
+  },
 }
 
 export const mutations = {
@@ -167,5 +205,22 @@ export const mutations = {
   COMMENT_ADDED(state, comment) {
     state.idea.comments.unshift(comment)
     state.idea.comments_count++
+  },
+
+  SET_CATEGORIES(state, categories) {
+    state.categories = categories
+  },
+
+  ADD_IDEA(state, idea) {
+    state.ideas.data.unshift(idea)
+  },
+
+  EDIT_IDEA(state, idea) {
+    state.editIdea = {
+      id: idea.id,
+      title: idea.title,
+      description: idea.description,
+      category: idea.category_id,
+    }
   },
 }

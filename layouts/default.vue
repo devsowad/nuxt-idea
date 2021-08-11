@@ -7,7 +7,7 @@
         </v-toolbar-title>
         <v-spacer />
 
-        <v-btn text to="/test"> test </v-btn>
+        <v-btn text to="/idea/add"> add idea </v-btn>
         <v-btn v-if="!$auth.loggedIn" text to="/login"> login </v-btn>
         <profile-menu v-else />
       </v-container>
@@ -32,7 +32,10 @@ export default {
   },
 
   async fetch() {
-    if (this.$auth.$state.loggedIn) await this.$store.dispatch('user/loadVotes')
+    if (this.$auth.$state.loggedIn) {
+      await this.$store.dispatch('user/loadVotes')
+      await this.$store.dispatch('idea/loadCategories')
+    }
   },
 
   watch: {

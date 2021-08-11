@@ -5,8 +5,11 @@ export const state = () => ({
 
 export const actions = {
   setErrors({ commit }, res) {
-    const err = res.data.error || res.data.errors || res.statusText
+    const err = res
+      ? res.data.error || res.data.errors || res.statusText
+      : 'Something went wrong. Please try again.'
     commit('SET_ERRORS', err)
+    commit('SET_LOADING', false)
   },
 
   setLoading({ commit }, { loading, nullErrors }) {

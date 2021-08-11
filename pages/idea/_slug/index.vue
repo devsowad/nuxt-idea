@@ -1,7 +1,6 @@
 <template>
   <v-row>
-    <v-col cols="12" md="3"> </v-col>
-    <v-col cols="12" md="9">
+    <v-col cols="12" md="12">
       <idea-card v-if="idea" :idea="idea" single />
 
       <v-card-actions v-if="idea.id" class="mt-5">
@@ -25,19 +24,22 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
-import IdeaReply from '~/components/IdeaReply.vue'
 
 export default {
-  components: { IdeaReply },
   async fetch() {
     await this.loadIdea(this.$route.params.slug)
   },
 
   computed: {
-    ...mapState({ idea: ({ idea }) => idea.idea }),
+    ...mapState({
+      idea: ({ idea }) => idea.idea,
+    }),
   },
 
   methods: {
+    created() {
+      this.$router.push('/')
+    },
     ...mapActions('idea', ['loadIdea']),
   },
 }
