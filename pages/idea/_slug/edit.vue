@@ -15,6 +15,8 @@
 import { mapActions, mapState } from 'vuex'
 
 export default {
+  middleware: 'auth',
+
   data() {
     return {
       idea: this.editIdea,

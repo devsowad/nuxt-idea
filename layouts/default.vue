@@ -7,9 +7,11 @@
         </v-toolbar-title>
         <v-spacer />
 
-        <v-btn text to="/idea/add"> add idea </v-btn>
         <v-btn v-if="!$auth.loggedIn" text to="/login"> login </v-btn>
-        <profile-menu v-else />
+        <span v-else>
+          <v-btn text to="/idea/add"> add idea </v-btn>
+          <profile-menu />
+        </span>
       </v-container>
     </v-app-bar>
     <v-main>

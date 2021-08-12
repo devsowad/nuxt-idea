@@ -1,34 +1,34 @@
 <template>
-  <v-dialog v-model="menu" max-width="600px">
-    <template #activator="{ on, attrs }">
-      <v-btn large class="mr-2" v-bind="attrs" v-on="on">reply</v-btn>
-    </template>
+  <span>
+    <v-btn large class="mr-2" @click="openModal">reply</v-btn>
 
-    <v-card>
-      <v-form ref="form" v-model="form" @submit.prevent="submit">
-        <v-card-text>
-          <v-textarea
-            v-model="data.body"
-            :rules="[$validation.required(), $validation.minLength(50)]"
-            autofocus
-            filled
-            label="Comment"
-            auto-grow
-            rows="3"
-          ></v-textarea>
+    <v-dialog v-model="menu" max-width="600px">
+      <v-card>
+        <v-form ref="form" v-model="form" @submit.prevent="submit">
+          <v-card-text>
+            <v-textarea
+              v-model="data.body"
+              :rules="[$validation.required(), $validation.minLength(50)]"
+              autofocus
+              filled
+              label="Comment"
+              auto-grow
+              rows="3"
+            ></v-textarea>
 
-          <form-errors class="mt-4" />
-        </v-card-text>
+            <form-errors class="mt-4" />
+          </v-card-text>
 
-        <v-card-actions>
-          <v-spacer></v-spacer>
+          <v-card-actions>
+            <v-spacer></v-spacer>
 
-          <v-btn color="error" text @click="cancel"> Cancel </v-btn>
-          <submit-button :disabled="!form" text content="comment" />
-        </v-card-actions>
-      </v-form>
-    </v-card>
-  </v-dialog>
+            <v-btn color="error" text @click="cancel"> Cancel </v-btn>
+            <submit-button :disabled="!form" text content="comment" />
+          </v-card-actions>
+        </v-form>
+      </v-card>
+    </v-dialog>
+  </span>
 </template>
 
 <script>
@@ -50,6 +50,10 @@ export default {
   },
 
   methods: {
+    async openModal() {
+      await this.$user.authenticate()
+      this.menu = true
+    },
     async submit() {
       try {
         await this.addComment(this.data)

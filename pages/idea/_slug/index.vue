@@ -5,7 +5,13 @@
 
       <v-card-actions v-if="idea.id" class="mt-5">
         <idea-reply :id="idea.id" />
-        <idea-status :id="idea.id" :status="idea.status.name" />
+
+        <idea-status
+          v-if="$user.isAdmin()"
+          :id="idea.id"
+          :status="idea.status.name"
+        />
+
         <v-spacer />
         <vote-button
           :user-id="idea.user_id"

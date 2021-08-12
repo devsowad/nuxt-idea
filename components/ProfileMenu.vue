@@ -13,12 +13,10 @@
           <v-avatar color="brown">
             <span class="white--text text-h5">{{ $auth.user.name[0] }}</span>
           </v-avatar>
-          <h3>{{ $auth.user.name }}</h3>
+          <h3 class="mt-3">{{ $auth.user.name }}</h3>
           <p class="text-caption mt-1">
             {{ $auth.user.email }}
           </p>
-          <v-divider class="my-3"></v-divider>
-          <v-btn depressed rounded text> Edit Account </v-btn>
           <v-divider class="my-3"></v-divider>
           <v-btn depressed rounded text @click="logout"> logout </v-btn>
         </div>

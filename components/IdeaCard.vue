@@ -56,7 +56,7 @@
               {{ idea.category.name }}
               <v-icon x-small class="mx-2">mdi-circle</v-icon>
               {{ idea.comments_count }} comments
-              <span class="error--text">
+              <span v-if="$user.isAdmin()" class="error--text">
                 <v-icon x-small class="mx-2" color="error">mdi-circle</v-icon>
                 {{ idea.spam_reports }} spam reports
               </span>
@@ -66,7 +66,7 @@
                 {{ idea.status.name }}
               </v-chip>
               <v-menu
-                v-if="single"
+                v-if="single && $auth.loggedIn"
                 offset-x
                 bottom
                 left
@@ -78,16 +78,25 @@
                   </v-btn>
                 </template>
                 <v-list>
-                  <v-list-item @click="confirmDialog = true">
+                  <v-list-item
+                    v-if="$user.isOwnOrAdmin(idea.user_id)"
+                    @click="confirmDialog = true"
+                  >
                     <v-list-item-title> Delete Idea </v-list-item-title>
                   </v-list-item>
-                  <v-list-item :to="`/idea/${idea.slug}/edit`">
+                  <v-list-item
+                    v-if="$user.isOwn(idea.user_id)"
+                    :to="`/idea/${idea.slug}/edit`"
+                  >
                     <v-list-item-title> Edit Idea </v-list-item-title>
                   </v-list-item>
                   <v-list-item @click="markAsSpam(idea.id)">
                     <v-list-item-title>Mark as Spam</v-list-item-title>
                   </v-list-item>
-                  <v-list-item @click="notSpam(idea.id)">
+                  <v-list-item
+                    v-if="$user.isAdmin(idea.user_id)"
+                    @click="notSpam(idea.id)"
+                  >
                     <v-list-item-title>Not Spam</v-list-item-title>
                   </v-list-item>
                 </v-list>

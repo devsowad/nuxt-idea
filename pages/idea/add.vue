@@ -10,6 +10,8 @@
 import { mapActions } from 'vuex'
 
 export default {
+  middleware: 'auth',
+
   methods: {
     async submit(idea) {
       try {

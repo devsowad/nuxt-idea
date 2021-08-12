@@ -26,6 +26,7 @@ export default {
     '@/plugins/form.js',
     '@/plugins/validation.js',
     '@/plugins/moment.js',
+    '@/plugins/user.js',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

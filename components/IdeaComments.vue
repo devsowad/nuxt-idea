@@ -13,14 +13,13 @@
         small
         :color="timelineColor()"
       >
-        <!-- :color="message.color" -->
         <v-card class="d-flex align-center pa-5">
           <div class="w-100">
             <div class="d-flex ma-0">
               <v-avatar color="primary" tile class="rounded" size="40">
-                <span class="white--text subtitle-1">{{
-                  comment.user.name[0]
-                }}</span>
+                <span class="white--text subtitle-1">
+                  {{ comment.user.name[0] }}
+                </span>
               </v-avatar>
               <span>
                 <v-card-subtitle class="pt-0">
@@ -35,13 +34,14 @@
                 {{ comment.user.name }}
                 <v-icon x-small class="mx-2">mdi-circle</v-icon>
                 {{ $moment(comment.created_at).fromNow() }}
-                <span class="error--text">
+                <span v-if="$user.isAdmin()" class="error--text">
                   <v-icon x-small class="mx-2" color="error">mdi-circle</v-icon>
                   {{ comment.spam_reports }} spam reports
                 </span>
               </div>
               <div>
                 <v-menu
+                  v-if="$auth.loggedIn"
                   offset-x
                   bottom
                   left
@@ -53,13 +53,19 @@
                     </v-btn>
                   </template>
                   <v-list>
-                    <v-list-item @click="confirm(comment.id)">
+                    <v-list-item
+                      v-if="$user.isOwnOrAdmin(comment.user_id)"
+                      @click="confirm(comment.id)"
+                    >
                       <v-list-item-title>Delete Comment</v-list-item-title>
                     </v-list-item>
                     <v-list-item @click="markCommentAsSpam(comment.id)">
                       <v-list-item-title>Mark as Spam</v-list-item-title>
                     </v-list-item>
-                    <v-list-item @click="commentNotSpam(comment.id)">
+                    <v-list-item
+                      v-if="$user.isAdmin()"
+                      @click="commentNotSpam(comment.id)"
+                    >
                       <v-list-item-title>Not Spam</v-list-item-title>
                     </v-list-item>
                   </v-list>
