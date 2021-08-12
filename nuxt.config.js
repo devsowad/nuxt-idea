@@ -70,6 +70,10 @@ export default {
     },
   },
 
+  env: {
+    API_URL: process.env.API_URL,
+  },
+
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
 
@@ -78,6 +82,11 @@ export default {
       laravelJWT: {
         provider: 'laravel/jwt',
         url: process.env.LARAVEL_JWT_URL,
+        endpoints: {
+          login: { url: '/login' },
+          logout: { url: '/logout' },
+          user: { url: '/user' },
+        },
         token: {
           property: 'access_token',
           maxAge: (process.env.JWT_TTL || 60) * 60,
