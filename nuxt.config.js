@@ -87,6 +87,7 @@ export default {
           login: { url: '/login' },
           logout: { url: '/logout' },
           user: { url: '/user' },
+          refresh: { url: '/refresh' },
         },
         token: {
           property: 'access_token',
