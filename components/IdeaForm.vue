@@ -6,6 +6,7 @@
         <v-text-field
           v-model="idea.title"
           :rules="[$validation.required()]"
+          autofocus
           filled
           label="Title*"
         />

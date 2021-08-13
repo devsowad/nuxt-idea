@@ -6,10 +6,14 @@
         @confirm="confirmDelete"
       />
     </v-dialog>
-    <v-timeline align-top dense>
+    <v-timeline
+      v-if="ideaComment.data && ideaComment.data.length"
+      align-top
+      dense
+    >
       <v-timeline-item
-        v-for="comment in comments"
-        :key="`idea-comment-${comment.id}`"
+        v-for="(comment, i) in ideaComment.data"
+        :key="`idea-comment-${comment.id}-${comment.created_at}-${i}`"
         small
         :color="timelineColor()"
       >
@@ -75,15 +79,28 @@
           </div>
         </v-card>
       </v-timeline-item>
+      <v-expand-transition>
+        <v-timeline-item v-if="ideaComment.next_page_url" small color="yellow">
+          <v-card v-intersect="onIntersect">
+            <v-skeleton-loader
+              v-if="loading"
+              class="mb-6"
+              elevation="2"
+              type="list-item-avatar, divider, list-item-three-line, card-heading,  actions"
+            ></v-skeleton-loader>
+          </v-card>
+        </v-timeline-item>
+        <h1 v-else class="text-center subtitle-1 mt-5">No more comments</h1>
+      </v-expand-transition>
     </v-timeline>
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 export default {
-  props: { comments: { type: Array, required: true } },
+  props: { ideaId: { type: Number, required: true } },
 
   data: () => ({
     colors: [
@@ -98,9 +115,35 @@ export default {
     ],
     confirmDialog: false,
     selectCommentId: null,
+    page: 1,
+    loading: false,
   }),
 
+  async fetch() {
+    this.loading = true
+    const params = { page: this.page, ideaId: this.ideaId }
+    await this.loadIdeaComments(params)
+    this.page++
+    this.loading = false
+  },
+
+  computed: {
+    ...mapState({ ideaComment: ({ comment }) => comment.ideaComment }),
+  },
+
+  beforeDestroy() {
+    this.$store.commit('comment/NULL_COMMENTS')
+  },
+
   methods: {
+    onIntersect(entries) {
+      if (entries[0].isIntersecting) {
+        if (this.ideaComment.next_page_url) {
+          this.$fetch()
+        }
+      }
+    },
+
     timelineColor() {
       return this.colors[Math.floor(Math.random(1, 2) * this.colors.length)]
     },
@@ -118,7 +161,8 @@ export default {
       } catch (error) {}
     },
 
-    ...mapActions('idea', [
+    ...mapActions('comment', [
+      'loadIdeaComments',
       'markCommentAsSpam',
       'commentNotSpam',
       'deleteComment',

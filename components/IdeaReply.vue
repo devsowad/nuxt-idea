@@ -8,7 +8,7 @@
           <v-card-text>
             <v-textarea
               v-model="data.body"
-              :rules="[$validation.required(), $validation.minLength(50)]"
+              :rules="[$validation.required(), $validation.minLength(5)]"
               autofocus
               filled
               label="Comment"
@@ -56,7 +56,7 @@ export default {
     },
     async submit() {
       try {
-        await this.addComment(this.data)
+        await this.add(this.data)
         this.cancel()
       } catch (error) {}
     },
@@ -65,7 +65,7 @@ export default {
       this.menu = false
       this.$store.commit('form/SET_ERRORS', null)
     },
-    ...mapActions('idea', ['addComment']),
+    ...mapActions('comment', ['add']),
   },
 }
 </script>
