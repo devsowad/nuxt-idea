@@ -3,7 +3,7 @@
     <template #activator="{ on }">
       <v-btn :loading="loading" icon x-large v-on="on">
         <v-avatar color="brown" size="48">
-          <span class="white--text text-h5">{{ $auth.user.name[0] }}</span>
+          <v-img :src="$auth.user.avatar_url" :alt="$auth.user.name" />
         </v-avatar>
       </v-btn>
     </template>
@@ -11,7 +11,7 @@
       <v-list-item-content class="justify-center">
         <div class="mx-auto text-center">
           <v-avatar color="brown">
-            <span class="white--text text-h5">{{ $auth.user.name[0] }}</span>
+            <v-img :src="$auth.user.avatar_url" :alt="$auth.user.name" />
           </v-avatar>
           <h3 class="mt-3">{{ $auth.user.name }}</h3>
           <p class="text-caption mt-1">

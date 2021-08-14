@@ -36,10 +36,11 @@
           :class="!notification.read_at ? 'grey darken-3' : ''"
         >
           <v-list-item-avatar>
-            <v-avatar color="brown" size="48">
-              <span class="white--text text-h5">
-                {{ notification.data.user.name[0] }}
-              </span>
+            <v-avatar color="brown" size="41">
+              <v-img
+                :src="notification.data.user.avatar_url"
+                :alt="notification.data.user.name"
+              />
             </v-avatar>
           </v-list-item-avatar>
 

@@ -15,14 +15,13 @@
         <div class="w-100">
           <div class="d-flex ma-0">
             <v-avatar
+              v-if="idea.user"
               color="primary"
               tile
               class="rounded mt-2"
               :size="single ? 80 : 60"
             >
-              <span class="white--text display-1">
-                {{ idea.user && idea.user.name[0] }}
-              </span>
+              <v-img :src="idea.user.avatar_url" :alt="idea.user.name" />
             </v-avatar>
             <span>
               <v-card-title class="pt-0">

@@ -21,9 +21,10 @@
           <div class="w-100">
             <div class="d-flex ma-0">
               <v-avatar color="primary" tile class="rounded" size="40">
-                <span class="white--text subtitle-1">
-                  {{ comment.user.name[0] }}
-                </span>
+                <v-img
+                  :src="comment.user.avatar_url"
+                  :alt="comment.user.name"
+                />
               </v-avatar>
               <span>
                 <v-card-subtitle class="pt-0">
