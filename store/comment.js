@@ -5,12 +5,16 @@ export const state = () => ({
 })
 
 export const actions = {
-  async loadIdeaComments({ commit }, { page, ideaId }) {
-    const comments = await Comment.where('idea_id', ideaId)
+  async loadIdeaComments({ commit }, page) {
+    const comments = await Comment.where(
+      'idea.slug',
+      this.$router.currentRoute.params.slug
+    )
       .include('user')
       .select({
         comments: ['id', 'body', 'spam_reports', 'created_at', 'user_id'],
         user: ['id', 'name', 'email'],
+        idea: ['id', 'slug'],
       })
       .page(page || 1)
       .limit(5)

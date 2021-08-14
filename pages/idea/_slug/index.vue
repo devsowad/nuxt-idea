@@ -20,7 +20,7 @@
         />
       </v-card-actions>
 
-      <idea-comments v-if="idea.id" :idea-id="idea.id" />
+      <idea-comments :idea-id="idea.id" />
     </v-col>
   </v-row>
 </template>

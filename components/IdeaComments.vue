@@ -100,8 +100,6 @@
 import { mapActions, mapState } from 'vuex'
 
 export default {
-  props: { ideaId: { type: Number, required: true } },
-
   data: () => ({
     colors: [
       'success',
@@ -121,8 +119,7 @@ export default {
 
   async fetch() {
     this.loading = true
-    const params = { page: this.page, ideaId: this.ideaId }
-    await this.loadIdeaComments(params)
+    await this.loadIdeaComments(this.page)
     this.page++
     this.loading = false
   },
