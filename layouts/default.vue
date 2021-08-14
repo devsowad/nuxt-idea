@@ -10,6 +10,7 @@
         <v-btn v-if="!$auth.loggedIn" text to="/login"> login </v-btn>
         <span v-else>
           <v-btn text to="/idea/add"> add idea </v-btn>
+          <notifications />
           <profile-menu />
         </span>
       </v-container>
