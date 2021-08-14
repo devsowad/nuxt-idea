@@ -12,6 +12,7 @@ export default {
       this.$form.startLoading()
       try {
         await this.$auth.loginWith('laravelJWT', { data })
+        await this.$store.dispatch('idea/loadCategories')
       } catch ({ response }) {
         this.$form.setErrors(response)
       }

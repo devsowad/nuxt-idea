@@ -13,6 +13,7 @@ export default {
       try {
         await this.$axios.post('/auth/register', data)
         await this.$auth.loginWith('laravelJWT', { data })
+        await this.$store.dispatch('idea/loadCategories')
       } catch ({ response }) {
         this.$form.setErrors(response)
       }
