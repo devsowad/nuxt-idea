@@ -31,12 +31,22 @@
           <v-divider class="my-3"></v-divider>
           <v-btn depressed rounded text @click="logout"> logout </v-btn>
           <v-divider class="my-3"></v-divider>
-          <v-btn depressed rounded text icon>
-            <v-icon>mdi-brightness-4</v-icon>
-          </v-btn>
-          <v-btn depressed rounded text icon>
-            <v-icon>mdi-brightness-2</v-icon>
-          </v-btn>
+          <v-item-group
+            v-model="$colorMode.preference"
+            mandatory
+            class="d-flex justify-space-around"
+          >
+            <v-item
+              v-for="theme in themes"
+              :key="theme.icon"
+              v-slot="{ active, toggle }"
+              :value="theme.value"
+            >
+              <v-btn text icon :color="active ? 'primary' : ''" @click="toggle">
+                <v-icon>{{ theme.icon }}</v-icon>
+              </v-btn>
+            </v-item>
+          </v-item-group>
         </div>
       </v-list-item-content>
     </v-card>
@@ -47,6 +57,11 @@
 export default {
   data: () => ({
     loading: false,
+    themes: [
+      { value: 'system', icon: 'mdi-laptop' },
+      { value: 'dark', icon: 'mdi-brightness-4' },
+      { value: 'light', icon: 'mdi-brightness-2' },
+    ],
   }),
 
   methods: {

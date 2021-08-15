@@ -45,6 +45,9 @@ export default {
     $route(to, from) {
       this.$store.commit('form/SET_ERRORS', null)
     },
+    '$colorMode.value'() {
+      this.$vuetify.theme.dark = this.$colorMode.value === 'dark'
+    },
   },
 }
 </script>
