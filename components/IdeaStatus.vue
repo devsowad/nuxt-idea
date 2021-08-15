@@ -45,20 +45,6 @@
               value="Closed"
             ></v-radio>
           </v-radio-group>
-          <v-textarea
-            v-model="form.comment"
-            filled
-            label="Update Comment (optional)"
-            auto-grow
-            rows="2"
-            hide-details
-          ></v-textarea>
-          <v-checkbox
-            v-model="form.notifyAllUsers"
-            label="Notify All Users"
-            color="primary"
-            hide-details
-          ></v-checkbox>
 
           <form-errors class="mt-4" />
         </v-card-text>

@@ -26,14 +26,14 @@
                   :alt="comment.user.name"
                 />
               </v-avatar>
-              <span>
+              <span class="w-100 pr-18px">
                 <v-card-subtitle class="pt-0">
                   {{ comment.body }}
                 </v-card-subtitle>
               </span>
             </div>
             <v-card-text
-              class="d-flex full-width align-center justify-space-between"
+              class="d-flex full-width align-center justify-space-between w-100"
             >
               <div>
                 {{ comment.user.name }}

@@ -1,8 +1,19 @@
 <template>
-  <v-menu bottom min-width="200px" rounded offset-y>
+  <v-menu
+    bottom
+    min-width="200px"
+    rounded
+    offset-y
+    :close-on-content-click="false"
+  >
     <template #activator="{ on }">
-      <v-btn :loading="loading" icon x-large v-on="on">
-        <v-avatar color="brown" size="48">
+      <v-btn
+        :loading="loading"
+        icon
+        :x-large="!$vuetify.breakpoint.smAndDown"
+        v-on="on"
+      >
+        <v-avatar color="brown" :size="$vuetify.breakpoint.smAndDown ? 40 : 48">
           <v-img :src="$auth.user.avatar_url" :alt="$auth.user.name" />
         </v-avatar>
       </v-btn>
@@ -19,6 +30,13 @@
           </p>
           <v-divider class="my-3"></v-divider>
           <v-btn depressed rounded text @click="logout"> logout </v-btn>
+          <v-divider class="my-3"></v-divider>
+          <v-btn depressed rounded text icon>
+            <v-icon>mdi-brightness-4</v-icon>
+          </v-btn>
+          <v-btn depressed rounded text icon>
+            <v-icon>mdi-brightness-2</v-icon>
+          </v-btn>
         </div>
       </v-list-item-content>
     </v-card>

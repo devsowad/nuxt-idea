@@ -1,8 +1,8 @@
 <template>
   <v-app>
-    <v-app-bar fixed app>
+    <v-app-bar hide-on-scroll elevate-on-scroll app>
       <v-container class="py-0 fill-height">
-        <v-toolbar-title>
+        <v-toolbar-title class="text-bold">
           <nuxt-link to="/">{{ title }}</nuxt-link>
         </v-toolbar-title>
         <v-spacer />
@@ -30,7 +30,7 @@
 export default {
   data() {
     return {
-      title: 'Vuetify.js',
+      title: 'IDEA',
     }
   },
 

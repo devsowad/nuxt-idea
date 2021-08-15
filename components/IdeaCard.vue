@@ -8,7 +8,10 @@
         class="d-flex align-center pa-5"
         :to="single ? '' : `/idea/${idea.slug}`"
       >
-        <div v-if="!single" class="text-center mr-5">
+        <div
+          v-if="!single && !$vuetify.breakpoint.smAndDown"
+          class="text-center mr-5"
+        >
           <h2 class="headline mb-3">{{ idea.votes_count }}</h2>
           <vote-button simple :user-id="idea.user_id" :idea-id="idea.id" />
         </div>
@@ -45,16 +48,20 @@
             v-if="idea.user"
             class="d-flex full-width align-center justify-space-between"
           >
-            <div>
-              <span v-if="single">
+            <div class="d-flex flex-wrap">
+              <span v-if="single" class="mr-2">
                 {{ idea.user.name }}
-                <v-icon x-small class="mx-2">mdi-circle</v-icon>
+                <v-icon x-small>mdi-circle</v-icon>
               </span>
               {{ $moment(idea.created_at).fromNow() }}
               <v-icon x-small class="mx-2">mdi-circle</v-icon>
               {{ idea.category.name }}
               <v-icon x-small class="mx-2">mdi-circle</v-icon>
               {{ idea.comments_count }} comments
+              <span v-if="$vuetify.breakpoint.smAndDown" class="success--text">
+                <v-icon x-small class="mx-2" color="success">mdi-circle</v-icon>
+                {{ idea.votes_count }} vote{{ idea.votes_count > 1 ? 's' : '' }}
+              </span>
               <span v-if="$user.isAdmin()" class="error--text">
                 <v-icon x-small class="mx-2" color="error">mdi-circle</v-icon>
                 {{ idea.spam_reports }} spam reports

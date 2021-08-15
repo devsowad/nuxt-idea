@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-form ref="form" v-model="form" @submit.prevent="submit">
-      <v-card-title>Add Your Idea </v-card-title>
+      <v-card-title class="justify-center">Add Your Idea </v-card-title>
       <v-card-text>
         <v-text-field
           v-model="idea.title"

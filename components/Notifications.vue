@@ -3,15 +3,20 @@
     v-model="isOpen"
     bottom
     left
-    max-width="400px"
-    min-width="400px"
+    :max-width="$vuetify.breakpoint.smAndDown ? '300px' : '400px'"
+    :min-width="$vuetify.breakpoint.smAndDown ? '300px' : '400px'"
     rounded
     offset-y
     :close-on-content-click="false"
     max-height="calc(100vh - 100px)"
   >
     <template #activator="{ on }">
-      <v-btn icon x-large @click="toggle" v-on="on">
+      <v-btn
+        icon
+        :x-large="!$vuetify.breakpoint.smAndDown"
+        @click="toggle"
+        v-on="on"
+      >
         <v-icon>mdi-bell</v-icon>
       </v-btn>
     </template>
@@ -33,7 +38,13 @@
               : ''
           "
           active-class=""
-          :class="!notification.read_at ? 'grey darken-3' : ''"
+          :class="
+            !notification.read_at
+              ? $vuetify.theme.dark
+                ? 'grey darken-3'
+                : 'grey lighten-2'
+              : ''
+          "
         >
           <v-list-item-avatar>
             <v-avatar color="brown" size="41">
@@ -53,12 +64,10 @@
                   : notification.data.idea.title
               }}
             </v-list-item-subtitle>
-          </v-list-item-content>
-          <v-list-item-action>
-            <v-list-item-action-text>
+            <v-list-item-subtitle>
               {{ $moment(notification.created_at).fromNow() }}
-            </v-list-item-action-text>
-          </v-list-item-action>
+            </v-list-item-subtitle>
+          </v-list-item-content>
         </v-list-item>
       </v-list>
       <v-card-text v-else class="text-center">

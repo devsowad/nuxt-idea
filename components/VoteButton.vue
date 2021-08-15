@@ -2,7 +2,7 @@
   <span class="d-flex align-center">
     <v-sheet v-if="!simple" rounded class="px-4 py-2 mr-3 text-center">
       <h3 class="heading">{{ votes }}</h3>
-      <p class="subtitle-2 mb-0">votes</p>
+      <p class="subtitle-2 mb-0">vote{{ votes > 1 ? 's' : '' }}</p>
     </v-sheet>
     <v-btn
       large
