@@ -83,7 +83,7 @@ export default {
     strategies: {
       laravelJWT: {
         provider: 'laravel/jwt',
-        url: process.env.LARAVEL_JWT_URL,
+        url: '/auth',
         endpoints: {
           login: { url: '/login' },
           logout: { url: '/logout' },
